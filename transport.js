@@ -28,7 +28,7 @@
       this.connecting=new Promise((resolve,reject)=>{
         let timer=setTimeout(()=>{this.reset();reject(Error('無法連上資料庫。請老師確認 GAS 已更新部署、允許任何人存取，且已設定正確的前端網址。'));},30000);
         this.readyResolve=()=>{clearTimeout(timer);this.readyResolve=null;resolve()};
-        let frame=global.document.createElement('iframe');this.frame=frame;frame.hidden=true;frame.setAttribute('aria-hidden','true');frame.title='故事資料連線';frame.referrerPolicy='no-referrer';
+        let frame=global.document.createElement('iframe');this.frame=frame;frame.setAttribute('aria-hidden','true');frame.title='故事資料連線';frame.style.cssText='position:fixed;left:-10000px;top:0;width:8px;height:8px;border:0;pointer-events:none';
         let url=new URL(this.url);url.searchParams.set('page','bridge');url.searchParams.set('parentOrigin',global.location.origin);url.searchParams.set('nonce',this.channel);frame.src=url.href;
         global.document.body.appendChild(frame);
       }).catch(e=>{this.connecting=null;throw e});return this.connecting;
